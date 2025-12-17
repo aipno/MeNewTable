@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="logo">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                        stroke="currentColor" stroke-width="2" />
+                    <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </div>
+            <div id="title">
+                <h1>New Tab</h1>
+            </div>
+        </div>
+
+        <div id="search-container">
+            <div class="search-wrapper">
+                <div class="custom-select-container" id="engine-selector">
+                    <div class="custom-select-trigger">
+                        <span class="selected-value">Google</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="custom-select-options">
+                        <div class="custom-option selected" data-value="google">Google</div>
+                        <div class="custom-option" data-value="bing">Bing</div>
+                        <div class="custom-option" data-value="baidu">百度</div>
+                        <div class="custom-option" data-value="duckduckgo">DuckDuckGo</div>
+                    </div>
+                </div>
+
+                <div class="search-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <label for="search-input" style="display:none;">Search</label>
+                <input type="text" id="search-input" placeholder="Search Google or type a URL" autofocus>
+            </div>
+        </div>
+
+        <div id="quick-links">
+            <div class="links-header">
+                <h2>Quick Links</h2>
+                <button id="edit-mode-btn" class="action-btn">Edit</button>
+            </div>
+            <div id="links-container">
+                <!-- Links will be rendered here by JS -->
+            </div>
+        </div>
+
+        <!-- Daily Quote -->
+        <div id="quote-container" style="display: none;">
+            <div id="quote-content">Loading quote...</div>
+            <div id="quote-author"></div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Link -->
+    <div class="modal-overlay" id="link-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Add Link</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="link-name">Name</label>
+                    <input type="text" id="link-name" class="form-input" placeholder="e.g. GitHub">
+                </div>
+                <div class="form-group">
+                    <label for="link-url">URL</label>
+                    <input type="text" id="link-url" class="form-input" placeholder="https://example.com">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-cancel" class="action-btn">Cancel</button>
+                <button id="modal-save" class="action-btn primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
