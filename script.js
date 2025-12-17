@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // State
     let isEditMode = false;
     let linksData = [];
-    let currentEngine = 'google';
+    let currentEngine = 'bing';
     let editingLinkId = null; // null means adding new
     let dragSrcElement = null;
 
@@ -34,10 +34,15 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const DEFAULT_LINKS = [
-        { id: 'google', name: 'Google', url: 'https://www.google.com', icon: getFavicon('https://www.google.com') },
-        { id: 'github', name: 'GitHub', url: 'https://github.com', icon: getFavicon('https://github.com') },
-        { id: 'stackoverflow', name: 'Stack Overflow', url: 'https://stackoverflow.com', icon: getFavicon('https://stackoverflow.com') },
-        { id: 'youtube', name: 'YouTube', url: 'https://youtube.com', icon: getFavicon('https://youtube.com') }
+        {id: 'google', name: 'Google', url: 'https://www.google.com', icon: getFavicon('https://www.google.com')},
+        {id: 'github', name: 'GitHub', url: 'https://github.com', icon: getFavicon('https://github.com')},
+        {
+            id: 'stackoverflow',
+            name: 'Stack Overflow',
+            url: 'https://stackoverflow.com',
+            icon: getFavicon('https://stackoverflow.com')
+        },
+        {id: 'youtube', name: 'YouTube', url: 'https://youtube.com', icon: getFavicon('https://youtube.com')}
     ];
 
     // --- Initialization ---
@@ -107,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function updatePlaceholder() {
-        searchInput.placeholder = `Search ${selectorValue.textContent} or type a URL`;
+        searchInput.placeholder = `使用 ${selectorValue.textContent} 进行搜索或输入网址链接`;
     }
 
     // --- Search Logic ---
@@ -120,11 +125,20 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             let searchUrl;
             switch (currentEngine) {
-                case 'google': searchUrl = 'https://www.google.com/search?q='; break;
-                case 'bing': searchUrl = 'https://www.bing.com/search?q='; break;
-                case 'baidu': searchUrl = 'https://www.baidu.com/s?wd='; break;
-                case 'duckduckgo': searchUrl = 'https://duckduckgo.com/?q='; break;
-                default: searchUrl = 'https://www.google.com/search?q=';
+                case 'google':
+                    searchUrl = 'https://www.google.com/search?q=';
+                    break;
+                case 'bing':
+                    searchUrl = 'https://www.bing.com/search?q=';
+                    break;
+                case 'baidu':
+                    searchUrl = 'https://www.baidu.com/s?wd=';
+                    break;
+                case 'duckduckgo':
+                    searchUrl = 'https://duckduckgo.com/?q=';
+                    break;
+                default:
+                    searchUrl = 'https://www.google.com/search?q=';
             }
             window.location.href = searchUrl + encodeURIComponent(query);
         }
@@ -256,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function openModal(link = null) {
         editingLinkId = link ? link.id : null;
-        modalTitle.textContent = link ? 'Edit Link' : 'Add Link';
+        modalTitle.textContent = link ? '编辑链接' : '新增链接';
         linkNameInput.value = link ? link.name : '';
         linkUrlInput.value = link ? link.url : '';
 
@@ -273,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let url = linkUrlInput.value.trim();
 
         if (!name || !url) {
-            alert('Please fill in both fields');
+            alert('请同时填写这两个字段');
             return;
         }
 
@@ -285,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Update existing
             const index = linksData.findIndex(l => l.id === editingLinkId);
             if (index !== -1) {
-                linksData[index] = { ...linksData[index], name, url };
+                linksData[index] = {...linksData[index], name, url};
             }
         } else {
             // Add new
@@ -304,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function deleteLink(id) {
-        if (confirm('Are you sure you want to delete this link?')) {
+        if (confirm('您确定要删除此链接吗?')) {
             linksData = linksData.filter(l => l.id !== id);
             saveToStorage();
             renderLinks();
@@ -327,14 +341,12 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 quoteContent.textContent = data.hitokoto;
                 quoteAuthor.textContent = data.from_who ? `${data.from} · ${data.from_who}` : data.from;
-                quoteContainer.style.display = 'block';
             })
             .catch(error => {
                 console.error('Error fetching quote:', error);
                 // Fallback quote
                 quoteContent.textContent = "Stay hungry, stay foolish.";
                 quoteAuthor.textContent = "Steve Jobs";
-                quoteContainer.style.display = 'block';
             });
     }
 
